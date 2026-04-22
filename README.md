@@ -3,9 +3,9 @@
 A small browser game built for GitHub Pages.
 
 ## Play
-- Move: `WASD` or arrow keys
-- Dash: `Space`
-- Restart after game over: `R`
+- Move: `WASD` / arrow keys / on-screen touch pad
+- Dash: `Space` / touch `Dash`
+- Restart after game over: `R` / touch `Restart`
 
 ## Goal
 Collect all relics in each wave while avoiding slimes. Each new wave increases the enemy count and speed.

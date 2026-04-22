@@ -15,14 +15,30 @@
         <p class="subcopy">A tiny pixel dungeon run. Grab relics, dodge slimes, survive as long as you can.</p>
       </div>
       <div class="hud-card">
-        <p><span>Move</span><strong>WASD / Arrows</strong></p>
-        <p><span>Dash</span><strong>Space</strong></p>
-        <p><span>Restart</span><strong>R</strong></p>
+        <p><span>Move</span><strong>WASD / Arrows / Touch pad</strong></p>
+        <p><span>Dash</span><strong>Space / Dash button</strong></p>
+        <p><span>Restart</span><strong>R / Restart button</strong></p>
       </div>
     </section>
 
     <section class="game-wrap">
-      <canvas id="game" width="960" height="640" aria-label="Pixel Ruins game canvas"></canvas>
+      <div class="game-stage">
+        <canvas id="game" width="960" height="640" aria-label="Pixel Ruins game canvas"></canvas>
+        <section class="touch-controls" aria-label="Mobile controls">
+          <div class="touch-dpad">
+            <div class="touch-gap"></div>
+            <button class="touch-btn" data-hold-key="ArrowUp" aria-label="Move up">▲</button>
+            <div class="touch-gap"></div>
+            <button class="touch-btn" data-hold-key="ArrowLeft" aria-label="Move left">◀</button>
+            <button class="touch-btn" data-hold-key="ArrowDown" aria-label="Move down">▼</button>
+            <button class="touch-btn" data-hold-key="ArrowRight" aria-label="Move right">▶</button>
+          </div>
+          <div class="touch-actions">
+            <button class="touch-btn touch-btn--accent" data-action="dash" aria-label="Dash">Dash</button>
+            <button class="touch-btn" data-action="restart" aria-label="Restart">Restart</button>
+          </div>
+        </section>
+      </div>
       <aside class="sidebar">
         <div class="panel">
           <h2>Status</h2>

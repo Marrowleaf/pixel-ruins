@@ -90,14 +90,70 @@ h1 {
   align-items: start;
 }
 
+.game-stage {
+  width: 100%;
+}
+
 #game {
   width: 100%;
+  max-width: 960px;
+  height: auto;
+  aspect-ratio: 3 / 2;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   border-radius: 20px;
   border: 3px solid rgba(255, 255, 255, 0.1);
   background: #0a0d16;
   box-shadow: 0 25px 45px var(--shadow);
+  touch-action: none;
+  display: block;
+}
+
+.touch-controls {
+  display: none;
+  margin-top: 14px;
+  gap: 14px;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.touch-dpad {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(56px, 72px));
+  gap: 10px;
+}
+
+.touch-actions {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(72px, 110px));
+}
+
+.touch-gap {
+  min-height: 56px;
+}
+
+.touch-btn {
+  appearance: none;
+  border: 0;
+  border-radius: 18px;
+  min-height: 56px;
+  padding: 0 14px;
+  background: linear-gradient(180deg, #343a60, #202643);
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.28);
+  touch-action: manipulation;
+}
+
+.touch-btn--accent {
+  background: linear-gradient(180deg, #1f8f9b, #18656c);
+}
+
+.touch-btn.is-active {
+  transform: translateY(1px) scale(0.98);
+  filter: brightness(1.1);
 }
 
 .sidebar {
@@ -135,5 +191,59 @@ h1 {
 
   .hud-card {
     min-width: 0;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .touch-controls {
+    display: flex;
+  }
+}
+
+@media (max-width: 720px) {
+  .shell {
+    padding: 18px 12px 28px;
+  }
+
+  .header {
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: clamp(1.8rem, 9vw, 2.8rem);
+  }
+
+  .subcopy {
+    font-size: 0.95rem;
+  }
+
+  .hud-card,
+  .panel {
+    border-radius: 14px;
+  }
+
+  .panel {
+    padding: 14px;
+  }
+
+  .touch-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .touch-dpad {
+    align-self: center;
+    grid-template-columns: repeat(3, 64px);
+  }
+
+  .touch-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .touch-btn {
+    min-height: 58px;
+    font-size: 1rem;
   }
 }

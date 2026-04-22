@@ -8,6 +8,7 @@ const ui = {
   health: document.getElementById("health"),
   best: document.getElementById("best"),
 };
+const controlButtons = [...document.querySelectorAll(".touch-btn")];
 
 const W = canvas.width;
 const H = canvas.height;
@@ -95,6 +96,18 @@ const state = {
   enemies: [],
   particles: [],
 };
+
+function normalizeKey(key) {
+  return key.length === 1 ? key.toLowerCase() : key;
+}
+
+function pressControl(key) {
+  keys.add(normalizeKey(key));
+}
+
+function releaseControl(key) {
+  keys.delete(normalizeKey(key));
+}
 
 function rand(min, max) {
   return Math.random() * (max - min) + min;
@@ -459,17 +472,54 @@ function loop(now) {
 }
 
 window.addEventListener("keydown", (event) => {
-  const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+  const key = normalizeKey(event.key);
   if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(event.key)) event.preventDefault();
-  keys.add(key);
+  pressControl(key);
   if (event.key === " ") tryDash();
   if (key === "r" && !state.running) resetGame();
 });
 
 window.addEventListener("keyup", (event) => {
-  const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
-  keys.delete(key);
+  releaseControl(event.key);
 });
+
+canvas.addEventListener("pointerdown", () => {
+  canvas.focus?.();
+});
+
+canvas.addEventListener("touchstart", (event) => {
+  event.preventDefault();
+}, { passive: false });
+
+for (const button of controlButtons) {
+  const holdKey = button.dataset.holdKey;
+  const action = button.dataset.action;
+
+  button.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    button.classList.add("is-active");
+
+    if (holdKey) {
+      pressControl(holdKey);
+      button.setPointerCapture?.(event.pointerId);
+      return;
+    }
+
+    if (action === "dash") tryDash();
+    if (action === "restart" && !state.running) resetGame();
+  });
+
+  const release = (event) => {
+    event?.preventDefault?.();
+    button.classList.remove("is-active");
+    if (holdKey) releaseControl(holdKey);
+  };
+
+  button.addEventListener("pointerup", release);
+  button.addEventListener("pointercancel", release);
+  button.addEventListener("pointerleave", release);
+  button.addEventListener("contextmenu", (event) => event.preventDefault());
+}
 
 resetGame();
 ui.best.textContent = state.best;
